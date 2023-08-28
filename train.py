@@ -95,8 +95,10 @@ def validate(model, testloader, criterion):
             labels = labels.to(device)
             # forward pass
             outputs = model(image)
+            # map each label to a vector in labels
+            transform_labels = lables_num2vec(labels, BATCH_SIZE, NCLASS)
             # calculate the loss
-            loss = criterion(outputs, labels)
+            loss = criterion(outputs, transform_labels)
             valid_running_loss += loss.item()
             # calculate the accuracy
             _, preds = torch.max(outputs.data, 1)
