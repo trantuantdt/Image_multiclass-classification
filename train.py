@@ -7,9 +7,10 @@ import time
 from tqdm.auto import tqdm
 
 from model import CNNModel
-from datasets import train_loader, valid_loader
+from datasets import train_loader, valid_loader, BATCH_SIZE
 from utils import save_model, save_plots
 
+NCLASS = 100
 # construct the argument parser
 parser = argparse.ArgumentParser()
 parser.add_argument('-e', '--epochs', type=int, default=20,
@@ -60,7 +61,7 @@ def train(model, trainloader, optimizer, criterion):
         # forward pass
         outputs = model(image)
         #map each label to a vector in labels
-        transform_labels = lables_num2vec(labels)
+        transform_labels = lables_num2vec(labels, BATCH_SIZE, NCLASS)
         print(f"label: {labels} transform labels: {transform_labels}")
         # calculate the loss
         loss = criterion(outputs, transform_labels)
