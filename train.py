@@ -36,6 +36,14 @@ optimizer = optim.Adam(model.parameters(), lr=lr)
 # loss function
 criterion = nn.CrossEntropyLoss()
 
+def lables_num2vec(labels, batch_size, nclass):
+    ret = torch.zeros((batch_size, nclass))
+    for (i, idx) in enumerate(labels):
+        ret[i,idx] = 1
+
+    return ret
+
+
 # training
 def train(model, trainloader, optimizer, criterion):
     model.train()
@@ -51,8 +59,11 @@ def train(model, trainloader, optimizer, criterion):
         optimizer.zero_grad()
         # forward pass
         outputs = model(image)
+        #map each label to a vector in labels
+        transform_labels = lables_num2vec(labels)
+        print(f"label: {labels} transform labels: {transform_labels}")
         # calculate the loss
-        loss = criterion(outputs, labels)
+        loss = criterion(outputs, transform_labels)
         train_running_loss += loss.item()
         # calculate the accuracy
         _, preds = torch.max(outputs.data, 1)
