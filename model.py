@@ -9,7 +9,7 @@ class CNNModel(nn.Module):
         self.conv3 = nn.Conv2d(64, 128, 3)
         self.conv4 = nn.Conv2d(128, 256, 5)
         
-        self.fc1 = nn.Linear(256, 50)
+        self.fc1 = nn.Linear(256, 100)
         
         self.pool = nn.MaxPool2d(2, 2)
         
