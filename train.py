@@ -62,7 +62,7 @@ def train(model, trainloader, optimizer, criterion):
         outputs = model(image)
         #map each label to a vector in labels
         transform_labels = lables_num2vec(labels, BATCH_SIZE, NCLASS)
-        print(f"label: {labels}, label size {labels.size()} transform labels: {transform_labels[0]} transform size {transform_labels.size()}")
+        print(f"output size: {outputs.size()}, label size {labels.size()} transform size {transform_labels.size()}")
         # calculate the loss
         loss = criterion(outputs, transform_labels)
         train_running_loss += loss.item()
